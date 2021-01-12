@@ -29,11 +29,11 @@ public class GuestController extends HttpServlet {
 			
 			guestDao.Insert(new GuestVo(name,pw,content));
 			
-			WebUtil.forward(request, response, "/gbc?action=list");
+			WebUtil.redirect(request, response, "/mysite02/gbc?action=list");
 		}else if ("deleteForm".equals(action)) {
 			System.out.println("딜리트폼");
 			
-			WebUtil.forward(request, response, "./WEB-INF/views/guest/deleteForm.jsp");
+			WebUtil.forward(request, response, "./WEB-INF/views/guest/deleteForm.jsp");//포워드
 		}else if ("delete".equals(action)) {
 			System.out.println("딜리트");
 			
@@ -43,12 +43,13 @@ public class GuestController extends HttpServlet {
 			
 			//password 불일치 
 			if(count<1) {
-				WebUtil.forward(request, response, "/gbc?action=deleteForm");
+				//no번호를 가져가야 하기때문에 forward
 				System.out.println("번호가 일치하지 않습니다");
+				WebUtil.forward(request, response, "./WEB-INF/views/guest/deleteForm.jsp");
 			}else if (count >=1){
 				//password 일치
-				WebUtil.forward(request, response, "/gbc?action=list");
 				System.out.println("번호가 일치합니다.");
+				WebUtil.redirect(request, response, "/mysite02/gbc");//리다이렉트
 			}
 		}else{
 			System.out.println("리스트폼");

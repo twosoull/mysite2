@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "com.javaex.vo.UserVo" %>
+<%
+	UserVo authUser = (UserVo)session.getAttribute("authUser");	
+%>
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
 %>
@@ -20,11 +24,21 @@
 			<h1>
 				<a href="/mysite02/main">MySite</a>
 			</h1>
-
+			<!-- 로그인 안했을때 -->
+			<%if(authUser == null){ %>
 			<ul>
 				<li><a href="/mysite02/user?action=loginForm">로그인</a></li>
 				<li><a href="/mysite02/user?action=joinForm">회원가입</a></li>
 			</ul>
+			
+			<!-- 로그인했을때 -->
+			<%}else{ %>
+			<ul>
+				<li><%=authUser.getName() %>님 안녕하세요^^</li>
+				<li><a href="/mysite02/user?action=logout">로그아웃</a></li>
+				<li><a href="/mysite02/user?action=modifyForm&no=<%=authUser.getNo() %>">회원정보수정</a></li>
+			</ul>
+			<%} %>
 		</div>
 		<!-- //header -->
 
@@ -76,7 +90,7 @@
 							<td>비밀번호</td>
 							<td><input type="password" name="pass"></td>
 							<td class="text-left"><button type="submit">삭제</button></td>
-							<td><a href="/guestbook2/gbc">[메인으로 돌아가기]</a></td>
+							<td><a href="/mysite02/main">[메인으로 돌아가기]</a></td>
 						</tr>
 					</table>
 					<input type='hidden' name="no" value="<%=no%>">
