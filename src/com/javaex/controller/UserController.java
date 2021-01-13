@@ -81,6 +81,9 @@ public class UserController extends HttpServlet {
 			WebUtil.redirect(request, response, "/mysite02/main");
 		}else if ("modifyForm".equals(action)) {
 			System.out.println("회원정보수정폼");
+			//********고민 2.테스트 해보니 접속중이 아니여도 url을 통해 접근 할 수 있다
+			//트라이문으로 해결해보았다
+			try {
 			//두가지 방법이있다
 			//1- 회원정보수정을 눌렀을 때 url에서 no의 값을 파라미터로 넘겨줘서 받는방법
 			int no = Integer.parseInt(request.getParameter("no"));
@@ -103,7 +106,11 @@ public class UserController extends HttpServlet {
 			
 			request.setAttribute("UserVo", userVo);
 			WebUtil.forward(request, response, "./WEB-INF/views/user/modifyForm.jsp");
-			
+			}catch (Exception e ) {
+				System.out.println("잘못된 접근입니다");
+				
+			WebUtil.redirect(request, response, "/mysite02/main");
+			}
 			
 		}else if("modify".equals(action)) {
 			System.out.println("회원정보수정");
@@ -119,6 +126,8 @@ public class UserController extends HttpServlet {
 			
 			UserDao userDao = new UserDao();
 			userDao.update(userVo);
+			
+			
 			
 			//수정완료 후 세션값도 함께 변경
 			UserVo authUser = userDao.getUser(no);
