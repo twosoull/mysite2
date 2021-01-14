@@ -45,6 +45,8 @@ public class GuestController extends HttpServlet {
 			if(count<1) {
 				//no번호를 가져가야 하기때문에 forward
 				System.out.println("번호가 일치하지 않습니다");
+				
+				request.setAttribute("result", "fail");
 				WebUtil.forward(request, response, "./WEB-INF/views/guest/deleteForm.jsp");
 			}else if (count >=1){
 				//password 일치

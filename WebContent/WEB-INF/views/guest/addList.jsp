@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "java.util.List" %>
-<%@ page import = "com.javaex.vo.GuestVo" %>
-<%@ page import = "com.javaex.vo.UserVo" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%
-	List<GuestVo> guestList = (List<GuestVo>)request.getAttribute("guestList");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +15,7 @@
 <body>
 	<div id="wrap">
 
-		<jsp:include page = "/WEB-INF/views/include/header.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
 		<div id="aside">
 			<h2>방명록</h2>
@@ -76,26 +71,26 @@
 					<input type="hidden" name="action" value="add">
 					
 				</form>	
-				<%for(int i = 0 ; i<guestList.size(); i++){ %>
-				<table class="guestRead">
-					<colgroup>
-						<col style="width: 10%;">
-						<col style="width: 40%;">
-						<col style="width: 40%;">
-						<col style="width: 10%;">
-					</colgroup>
-					<tr>
-						<td><%=guestList.get(i).getNo() %></td>
-						<td><%=guestList.get(i).getName() %></td>
-						<td><%=guestList.get(i).getDate() %></td>
-						<td><a href="/mysite02/gbc?action=deleteForm&no=<%=guestList.get(i).getNo()%>">[삭제]</a></td>
-					</tr>
-					<tr>
-						<td colspan=4 class="text-left"><%=guestList.get(i).getContent() %></td>
-					</tr>
-				</table>
+				<c:forEach items="${requestScope.guestList}" var="vo">
+					<table class="guestRead">
+						<colgroup>
+							<col style="width: 10%;">
+							<col style="width: 40%;">
+							<col style="width: 40%;">
+							<col style="width: 10%;">
+						</colgroup>
+						<tr>
+							<td>${vo.no}</td>
+							<td>${vo.name }</td>
+							<td>${vo.date }</td>
+							<td><a href="/mysite02/gbc?action=deleteForm&no=${vo.no}">[삭제]</a></td>
+						</tr>
+						<tr>
+							<td colspan=4 class="text-left">${vo.content}</td>
+						</tr>
+					</table>
 				<!-- //guestRead -->
-				<%} %>
+				</c:forEach>
 					
 				<!-- //guestRead -->
 				
@@ -105,7 +100,7 @@
 		<!-- //content  -->
 		<div class="clear"></div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		<!-- //footer -->
 
 	</div>
