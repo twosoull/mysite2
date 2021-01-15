@@ -12,9 +12,9 @@ import com.javaex.vo.GuestVo;
 
 public class GuestbookDao {
 	// 필드
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private ResultSet rs = null;
 	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	private String driver = "oracle.jdbc.driver.OracleDriver";
 	private String id = "webdb";
