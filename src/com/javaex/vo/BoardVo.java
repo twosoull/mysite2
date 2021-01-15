@@ -18,26 +18,19 @@ public class BoardVo {
 		super();
 	}
 	
-	
-	
-
-
-
-
-
-
-
-	public BoardVo(String title, String content, int userNo) {
+	//modifyForm
+	public BoardVo(int no, String title, String content, int hit, String regDate, String uName) {
 		super();
+		this.no = no;
 		this.title = title;
 		this.content = content;
-		this.userNo = userNo;
+		this.hit = hit;
+		this.regDate = regDate;
+		this.uName = uName;
 	}
-
 	
-
-
-
+	
+	//read
 	public BoardVo(String title, String content, int hit, String regDate, int userNo ,String uName) {
 		super();
 		this.title = title;
@@ -49,42 +42,34 @@ public class BoardVo {
 		
 	}
 
-
-
-
-
-	public BoardVo(String title, String content, int hit, int userNo) {
+	
+	//insert
+	public BoardVo(String title, String content, int userNo) {
 		super();
 		this.title = title;
 		this.content = content;
-		this.hit = hit;
-		this.userNo = userNo;
-	}
-
-
-
-	public BoardVo(int no, String title, int hit ,String regDate,String uName) {
-		super();
-		this.no = no;
-		this.title = title;
-		this.hit = hit;
-		this.regDate = regDate;
-		this.uName = uName;
-	}
-
-
-
-	public BoardVo(int no, String title, String content, int hit, String regDate, int userNo) {
-		super();
-		this.no = no;
-		this.title = title;
-		this.content = content;
-		this.hit = hit;
-		this.regDate = regDate;
 		this.userNo = userNo;
 	}
 
 	
+	//Boardlist
+	public BoardVo(int no, String title, int hit, String regDate, int userNo, String uName) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.hit = hit;
+		this.regDate = regDate;
+		this.userNo = userNo;
+		this.uName = uName;
+	}
+
+	//업데이트(modify)
+	public BoardVo(int no, String title, String content) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.content = content;
+	}
 
 	//메소드 g/s
 	public String getuName() {

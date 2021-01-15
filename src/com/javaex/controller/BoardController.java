@@ -48,12 +48,12 @@ public class BoardController extends HttpServlet {
 			UserVo authUser = (UserVo)session.getAttribute("authUser");
 			
 			//Vo에 넣기
-			int num = authUser.getNo();
+			int no = authUser.getNo();
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			
 			//Dao를 통해 인서트하기
-			BoardVo boardVo = new BoardVo(title,content,num);
+			BoardVo boardVo = new BoardVo(title,content,no);
 			
 			BoardDao boardDao = new BoardDao();
 			boardDao.insert(boardVo);
@@ -62,9 +62,11 @@ public class BoardController extends HttpServlet {
 			
 		}else if("read".equals(action)) {
 			System.out.println("읽기");
+			
 			int no = Integer.parseInt(request.getParameter("no"));
 			
 			BoardDao boardDao = new BoardDao();
+			boardDao.hitUp(no);
 			
 			BoardVo boardVo = boardDao.read(no);
 			
@@ -72,15 +74,15 @@ public class BoardController extends HttpServlet {
 			WebUtil.forward(request, response, "./WEB-INF/views/board/read.jsp");
 		}else if("modifyForm".equals(action)) {
 			System.out.println("수정폼");
+			int bNo  = Integer.parseInt(request.getParameter("bNo"));
+			System.out.println("bNo");
 			
 			HttpSession session = request.getSession();
 			UserVo authUser = (UserVo)session.getAttribute("authUser");
-			System.out.println("dd");
-			
-			int no = authUser.getNo();
+			int uNo = authUser.getNo();
 			
 			BoardDao boardDao = new BoardDao();
-			BoardVo boardVo = boardDao.getModifyBoardList(no);
+			BoardVo boardVo = boardDao.getModifyBoardList(uNo,bNo);
 			
 			
 			request.setAttribute("boardVo", boardVo);
@@ -89,6 +91,24 @@ public class BoardController extends HttpServlet {
 		}else if("modify".equals(action)) {
 			System.out.println("수정");
 			
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			int no = Integer.parseInt(request.getParameter("no"));
+			
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.update(new BoardVo(no,title,content));
+			
+			WebUtil.redirect(request, response, "/mysite02/board?action=list");
+		}else if("delete".equals(action)) {
+			System.out.println("삭제");
+			
+			int no = Integer.parseInt(request.getParameter("no"));
+			
+			BoardDao boardDao = new BoardDao();
+			boardDao.delete(no);
+			
+			WebUtil.redirect(request, response, "/mysite02/board?action=list");
 			
 		}
 	}
