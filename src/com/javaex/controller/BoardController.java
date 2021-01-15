@@ -70,6 +70,26 @@ public class BoardController extends HttpServlet {
 			
 			request.setAttribute("boardVo", boardVo);
 			WebUtil.forward(request, response, "./WEB-INF/views/board/read.jsp");
+		}else if("modifyForm".equals(action)) {
+			System.out.println("수정폼");
+			
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			System.out.println("dd");
+			
+			int no = authUser.getNo();
+			
+			BoardDao boardDao = new BoardDao();
+			BoardVo boardVo = boardDao.getModifyBoardList(no);
+			
+			
+			request.setAttribute("boardVo", boardVo);
+			WebUtil.forward(request, response, "./WEB-INF/views/board/modifyForm.jsp");
+			
+		}else if("modify".equals(action)) {
+			System.out.println("수정");
+			
+			
 		}
 	}
 

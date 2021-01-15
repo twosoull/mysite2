@@ -22,6 +22,19 @@ public class BoardVo {
 	
 
 
+	public BoardVo(String title, String content, int hit, String regDate, String uName) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.hit = hit;
+		this.regDate = regDate;
+		this.uName = uName;
+	}
+
+
+
+
+
 	public BoardVo(String title, String content, int userNo) {
 		super();
 		this.title = title;
@@ -33,13 +46,15 @@ public class BoardVo {
 
 
 
-	public BoardVo(String title, String content, int hit, String regDate, String uName) {
+	public BoardVo(String title, String content, int hit, String regDate, int userNo ,String uName) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.hit = hit;
 		this.regDate = regDate;
+		this.userNo = userNo;
 		this.uName = uName;
+		
 	}
 
 

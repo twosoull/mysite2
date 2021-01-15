@@ -125,12 +125,13 @@ public class BoardDao {
 	public BoardVo read(int no) {
 
 		getConnection();
-		BoardVo boardVo =null;
+		BoardVo boardVo = null;
 		try {
 			String query = "";
 			query += " select b.title as title, ";
 			query += "        b.content as content, ";
 			query += "        b.hit as hit, ";
+			query += "        b.user_no as userNo, ";
 			query += "        b.reg_date as reg_date, ";
 			query += "        u.name as name ";
 			query += " from board b,users u ";
@@ -140,17 +141,57 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				String title = rs.getString("title");
 				String content = rs.getString("content");
-				int hit= rs.getInt("hit");
+				int hit = rs.getInt("hit");
+				int userNo = rs.getInt("userNo");
 				String date = rs.getString("reg_date");
 				String name = rs.getString("name");
+
+				boardVo = new BoardVo(title, content, hit, date, userNo, name);
+			}
+
+			System.out.println(boardVo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		close();
+		return boardVo;
+	}// read
+
+	public BoardVo getModifyBoardList(int no) {
+		getConnection();
+		
+		BoardVo boardVo = null;
+		try {
+			String query = "";
+			query += " select u.name as name, ";
+			query += "        b.hit as hit, ";
+			query += "        b.reg_date as reg_date, ";
+			query += "        b.title as title, ";
+			query += "        b.content as  content ";
+			query += " from board b , users u ";
+			query += " where b.user_no = u.no ";
+			query += " and u.no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String name = rs.getString("name");
+				int hit = rs.getInt("hit");
+				String date = rs.getString("reg_date");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
 				
 				boardVo = new BoardVo(title,content,hit,date,name);
+				
 			}
-			
 			System.out.println(boardVo);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

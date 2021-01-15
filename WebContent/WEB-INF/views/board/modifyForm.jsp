@@ -14,7 +14,7 @@
 
 <body>
 	<div id="wrap">
-	
+		
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 		
 
@@ -26,6 +26,7 @@
 			</ul>
 		</div>
 		<!-- //aside -->
+
 
 		<div id="content">
 
@@ -43,8 +44,8 @@
 			<!-- //content-head -->
 
 			<div id="board">
-				<div id="read">
-					<form action="#" method="get">
+				<div id="modifyForm">
+					<form action="/mysite02/board?" method="get">
 						<!-- 작성자 -->
 						<div class="form-group">
 							<span class="form-text">작성자</span>
@@ -65,36 +66,32 @@
 						
 						<!-- 제목 -->
 						<div class="form-group">
-							<span class="form-text">제 목</span>
-							<span class="form-value">${boardVo.title }</span>
+							<label class="form-text" for="txt-title">제목</label>
+							<input type="text" id="txt-title" name="title" value="${boardVo.title }">
 						</div>
 					
+						
+					
 						<!-- 내용 -->
-						<div id="txt-content">
-							<span class="form-value" >
-								${boardVo.content }
-								
-							</span>
+						<div class="form-group">
+							<textarea id="txt-content" name = "content">${boardVo.content } </textarea>
 						</div>
-						<c:if test="${boardVo.userNo == authUser.no }">
-							<a id="btn_modify" href="/mysite02/board?action=modifyForm">수정</a>
-						</c:if>
 						
-						<a id="btn_modify" href="/mysite02/board?action=list">목록</a>
-						
+						<a id="btn_cancel" href="">취소</a>
+						<button id="btn_modify" type="submit" >수정</button>
+						<input type="hidden" name = "action" value = "modify" >
 					</form>
 	                <!-- //form -->
 				</div>
-				<!-- //read -->
+				<!-- //modifyForm -->
 			</div>
 			<!-- //board -->
 		</div>
 		<!-- //content  -->
 		<div class="clear"></div>
 
+			<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		
-		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
-			
 	</div>
 	<!-- //wrap -->
 
