@@ -22,14 +22,6 @@ public class BoardVo {
 	
 
 
-	public BoardVo(String title, String content, int hit, String regDate, String uName) {
-		super();
-		this.title = title;
-		this.content = content;
-		this.hit = hit;
-		this.regDate = regDate;
-		this.uName = uName;
-	}
 
 
 

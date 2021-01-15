@@ -173,6 +173,7 @@ public class BoardDao {
 			query += "        b.hit as hit, ";
 			query += "        b.reg_date as reg_date, ";
 			query += "        b.title as title, ";
+			query += "        b.user_no as userNo, ";
 			query += "        b.content as  content ";
 			query += " from board b , users u ";
 			query += " where b.user_no = u.no ";
@@ -187,9 +188,10 @@ public class BoardDao {
 				int hit = rs.getInt("hit");
 				String date = rs.getString("reg_date");
 				String title = rs.getString("title");
+				int userNo = rs.getInt("userNo");
 				String content = rs.getString("content");
 				
-				boardVo = new BoardVo(title,content,hit,date,name);
+				boardVo = new BoardVo(title,content,hit,date,userNo,name);
 				
 			}
 			System.out.println(boardVo);
@@ -200,5 +202,20 @@ public class BoardDao {
 
 		close();
 		return boardVo;
+	}//getModifyBoardList
+	public int update(BoardVo boardVo) {
+		getConnection();
+		
+		String query = "";
+		query += " update board ";
+		query += " set title = ?, ";
+		query += "     content = ? ";
+		query += " where no = ? " ;
+		
+		
+		
+		
+		close();
+		
 	}
-}
+}//BoardDao
