@@ -7,23 +7,56 @@ public class BoardVo {
 	private String content;
 	private int hit;
 	private String regDate;
-	private String userNo;
+	private int userNo;
 	
 	//users 필드
 	private String uName;
 	
 	
 	//생성자
-
-
-
 	public BoardVo() {
 		super();
 	}
 	
 	
 	
-	public BoardVo(int no, String title, int hit, String regDate,String uName) {
+
+
+	public BoardVo(String title, String content, int userNo) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.userNo = userNo;
+	}
+
+	
+
+
+
+	public BoardVo(String title, String content, int hit, String regDate, String uName) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.hit = hit;
+		this.regDate = regDate;
+		this.uName = uName;
+	}
+
+
+
+
+
+	public BoardVo(String title, String content, int hit, int userNo) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.hit = hit;
+		this.userNo = userNo;
+	}
+
+
+
+	public BoardVo(int no, String title, int hit ,String regDate,String uName) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -34,7 +67,7 @@ public class BoardVo {
 
 
 
-	public BoardVo(int no, String title, String content, int hit, String regDate, String userNo) {
+	public BoardVo(int no, String title, String content, int hit, String regDate, int userNo) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -44,6 +77,7 @@ public class BoardVo {
 		this.userNo = userNo;
 	}
 
+	
 
 	//메소드 g/s
 	public String getuName() {
@@ -116,13 +150,13 @@ public class BoardVo {
 
 
 
-	public String getUserNo() {
+	public int getUserNo() {
 		return userNo;
 	}
 
 
 
-	public void setUserNo(String userNo) {
+	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
 

@@ -57,7 +57,7 @@ public class BoardDao {
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
 		try {
 			String query = " ";
-			
+
 			query += " select bo.no bno, ";
 			query += "        bo.title btitle, ";
 			query += "        us.name uname, ";
@@ -66,23 +66,21 @@ public class BoardDao {
 			query += " from  users us ,  board bo ";
 			query += " where us.no = bo.user_no ";
 			query += " order by bo.no desc ";
-			
 
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				int no = rs.getInt("bno");
 				String title = rs.getString("btitle");
 				String uName = rs.getString("uname");
 				int hit = rs.getInt("bhit");
 				String date = rs.getString("bdate");
-				
-				BoardVo boardVo = new BoardVo(no,title,hit,date,uName);
-				
-				
+
+				BoardVo boardVo = new BoardVo(no, title, hit, date, uName);
+
 				boardList.add(boardVo);
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -91,5 +89,75 @@ public class BoardDao {
 
 		close();
 		return boardList;
+	}// getBoardList
+
+	public int insert(BoardVo boardVo) {
+		getConnection();
+		int count = 0;
+		try {
+			String query = "";
+			query += " INSERT INTO board ";
+			query += " values(seq_board_no.nextval, "; // 보드넘버
+			query += "        ?, "; // 타이틀
+			query += "        ?, "; // 콘텐트
+			query += "        0, "; // 조회수
+			query += "        sysdate, "; // 날짜
+			query += "        ? "; // 유저아이디세션값
+			query += "        ) ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, boardVo.getTitle());
+			pstmt.setString(2, boardVo.getContent());
+			pstmt.setInt(3, boardVo.getUserNo());
+
+			count = pstmt.executeUpdate();
+
+			System.out.println("[DAO]INSERT" + count + "건이 생성되었습니다");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		close();
+		return count;
+	}// insert()
+
+	public BoardVo read(int no) {
+
+		getConnection();
+		BoardVo boardVo =null;
+		try {
+			String query = "";
+			query += " select b.title as title, ";
+			query += "        b.content as content, ";
+			query += "        b.hit as hit, ";
+			query += "        b.reg_date as reg_date, ";
+			query += "        u.name as name ";
+			query += " from board b,users u ";
+			query += " where u.no = b.user_no ";
+			query += " and b.no= ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				int hit= rs.getInt("hit");
+				String date = rs.getString("reg_date");
+				String name = rs.getString("name");
+				
+				boardVo = new BoardVo(title,content,hit,date,name);
+			}
+			
+			System.out.println(boardVo);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		close();
+		return boardVo;
 	}
 }
