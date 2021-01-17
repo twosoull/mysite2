@@ -110,6 +110,19 @@ public class BoardController extends HttpServlet {
 			
 			WebUtil.redirect(request, response, "/mysite02/board?action=list");
 			
+		}else if ("search".equals(action)) {
+			System.out.println("검색");
+			
+			String searches =  request.getParameter("searches");
+			
+			BoardDao boardDao = new BoardDao();
+			
+			List<BoardVo> boardList = boardDao.getBoardList(searches);
+			
+			
+			request.setAttribute("boardList", boardList);
+			WebUtil.forward(request, response, "./WEB-INF/views/board/list.jsp");
+			
 		}
 	}
 

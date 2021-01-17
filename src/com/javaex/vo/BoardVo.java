@@ -42,16 +42,6 @@ public class BoardVo {
 		
 	}
 
-	
-	//insert
-	public BoardVo(String title, String content, int userNo) {
-		super();
-		this.title = title;
-		this.content = content;
-		this.userNo = userNo;
-	}
-
-	
 	//Boardlist
 	public BoardVo(int no, String title, int hit, String regDate, int userNo, String uName) {
 		super();
@@ -62,6 +52,16 @@ public class BoardVo {
 		this.userNo = userNo;
 		this.uName = uName;
 	}
+	
+	//insert
+	public BoardVo(String title, String content, int userNo) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.userNo = userNo;
+	}
+
+	
 
 	//업데이트(modify)
 	public BoardVo(int no, String title, String content) {

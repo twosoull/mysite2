@@ -93,6 +93,54 @@ public class BoardDao {
 		return boardList;
 	}// getBoardList
 
+	public List<BoardVo> getBoardList(String search) {
+		getConnection();
+		List<BoardVo> boardList = new ArrayList<BoardVo>(); 
+		try {
+			String query = "";
+			query += " select bo.no as bno, ";
+			query += "        bo.title as btitle, ";
+			query += "        us.name  as uname, ";
+			query += "        bo.user_no as userno, ";
+			query += "        bo.hit as bhit, ";
+			query += "        to_char(bo.reg_date,'yy-mm-dd hh24:mi') as bdate ";
+			query += " from board bo, users us ";
+			query += " where bo.user_no = us.no ";
+			query += " and (bo.title like ?  or us.name like ? ) ";
+			query += " order by bo.no desc ";
+			
+			String like = "%" + search + "%";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1,like);
+			pstmt.setString(2,like);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				int bNo = rs.getInt("bno");
+				String bTitle = rs.getString("btitle");
+				String uName = rs.getString("uname");
+				int userNo = rs.getInt("userno");
+				int bHit = rs.getInt("bhit");
+				String bDate = rs.getString("bdate");
+				
+				BoardVo boardVo  = new BoardVo(bNo,bTitle,bHit,bDate,userNo,uName);
+				
+				boardList.add(boardVo);
+			
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return boardList;
+		
+	}
+
 	public int insert(BoardVo boardVo) {
 		getConnection();
 		int count = 0;
@@ -136,8 +184,8 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, no);
 			count = pstmt.executeUpdate();
-			
-			System.out.println("[DAO]hitUp:"+no+"번게시물의  조회수가 "+count+" 올랐습니다");
+
+			System.out.println("[DAO]hitUp:" + no + "번게시물의  조회수가 " + count + " 올랐습니다");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

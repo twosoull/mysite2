@@ -45,11 +45,12 @@
 
 			<div id="board">
 				<div id="list">
-					<form action="" method="">
+					<form action="/mysite02/board" method="get">
 						<div class="form-group text-right">
-							<input type="text">
+							<input type="text" name = "searches">
 							<button type="submit" id=btn_search>검색</button>
 						</div>
+						<input type = "hidden" name = "action" value="search">
 					</form>
 					<table >
 						<thead>
